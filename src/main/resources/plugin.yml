@@ -1,0 +1,14 @@
+name: Skywars
+prefix: Skywars
+version: '${version}'
+
+main: dev.novinity.skywars.Skywars
+api-version: '1.21'
+depend:
+  - WorldEdit
+
+authors: [ Novinity ]
+
+commands:
+  skywars:
+    permission: skywars.any

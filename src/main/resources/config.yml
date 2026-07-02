@@ -1,0 +1,4 @@
+allowStart: false
+minPlayers: 2
+maxPlayers: 12
+intermissionTime: 30
