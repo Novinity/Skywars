@@ -34,8 +34,8 @@ public class GameManager {
         this.world = _world;
 
         mapConfig = Skywars.getMapsConfig().getConfigurationSection(world.getName());
-        MINIMUM_PLAYERS = Skywars.getInstance().getConfig().getInt("minimumPlayers", 2);
-        MAXIMUM_PLAYERS = Skywars.getInstance().getConfig().getInt("minimumPlayers", 16);
+        MINIMUM_PLAYERS = Skywars.getInstance().getConfig().getInt("minPlayers", 2);
+        MAXIMUM_PLAYERS = Skywars.getInstance().getConfig().getInt("maxPlayers", 16);
         INTERMISSION_TIME = Skywars.getInstance().getConfig().getInt("intermissionTime", 30);
 
         populateChests();
@@ -137,7 +137,7 @@ public class GameManager {
 
         if (spawnpoint == null || players.size() > MAXIMUM_PLAYERS) {
             gamePlayer.alive = false;
-            gamePlayer.updateVisibility();
+            gamePlayer.updateVisibility(true);
         } else {
             if (_team.spawnpoint == null) {
                 _team.spawnpoint = spawnpoint;
@@ -243,7 +243,7 @@ public class GameManager {
 
     public void updatePlayerVisibility() {
         for (GamePlayer _gamePlayer : players) {
-            _gamePlayer.updateVisibility();
+            _gamePlayer.updateVisibility(true);
         }
     }
 
@@ -273,7 +273,9 @@ public class GameManager {
         }
 
         gameEnded = true;
-        updatePlayerVisibility();
+        for (GamePlayer _gamePlayer : players) {
+            _gamePlayer.updateVisibility(false);
+        }
 
         Team winningTeam = livingTeams.getFirst();
 

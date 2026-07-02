@@ -26,9 +26,9 @@ public class EventManager {
 
     public static void init() {
         eventSequence = new ArrayList<>() {{
-            add(new HashMap<>(Map.of(EventType.REFILL, 10)));
-            add(new HashMap<>(Map.of(EventType.REFILL, 10)));
-            add(new HashMap<>(Map.of(EventType.DOOM, 10)));
+            add(new HashMap<>(Map.of(EventType.REFILL, 120)));
+            add(new HashMap<>(Map.of(EventType.REFILL, 120)));
+            add(new HashMap<>(Map.of(EventType.DOOM, 300)));
         }};
     }
 

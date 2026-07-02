@@ -19,9 +19,7 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -110,7 +108,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         GamePlayer gamePlayer = Skywars.getInstance().getGameManager().getGamePlayer(event.getPlayer());
-        if (!_canAction(gamePlayer)) {
+        if (!_canAction(gamePlayer) || event.getBlock().getLocation().getBlockY() >= 128) {
             event.setCancelled(true);
             return;
         }
@@ -159,6 +157,31 @@ public class PlayerListeners implements Listener {
             if (!_canAction(gamePlayer)) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onUse(PlayerInteractEvent event) {
+        GamePlayer gamePlayer = Skywars.getInstance().getGameManager().getGamePlayer(event.getPlayer());
+        if (!_canAction(gamePlayer)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPickup(PlayerPickupItemEvent event) {
+        GamePlayer gamePlayer = Skywars.getInstance().getGameManager().getGamePlayer(event.getPlayer());
+        if (!_canAction(gamePlayer)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event) {
+        GamePlayer gamePlayer = Skywars.getInstance().getGameManager().getGamePlayer(event.getPlayer());
+        if (gamePlayer.player.getLocation().getBlockY() < 0) {
+            if (gamePlayer.alive) gamePlayer.player.teleport(new Location(gamePlayer.player.getWorld(), 0, 100, 0));
+            else gamePlayer.player.damage(gamePlayer.player.getHealth());
         }
     }
 }

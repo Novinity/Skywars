@@ -20,9 +20,11 @@ public class GamePlayer {
         Skywars.getInstance().getGameManager().registerDeath();
     }
 
-    public void updateVisibility() {
-        player.setAllowFlight(!alive);
-        player.setFlying(!alive);
+    public void updateVisibility(boolean _updateFlightStatus) {
+        if (_updateFlightStatus) {
+            player.setAllowFlight(!alive);
+            player.setFlying(!alive);
+        }
         for (GamePlayer gamePlayer : Skywars.getInstance().getGameManager().players) {
             if (alive || Skywars.getInstance().getGameManager().gameEnded) {
                 gamePlayer.player.showPlayer(player);
